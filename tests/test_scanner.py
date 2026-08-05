@@ -1,6 +1,11 @@
 from pathlib import Path
 
-from app.scanner import calculate_sha256, scan_directory
+from app.configuration import Configuration
+from app.scanner import (
+    Scanner,
+    calculate_sha256,
+    scan_directory,
+)
 
 
 def test_calculate_sha256_returns_consistent_hash(tmp_path: Path) -> None:
@@ -49,4 +54,18 @@ def test_scan_directory_raises_for_missing_folder(tmp_path: Path) -> None:
         pass
     else:
         raise AssertionError("Expected FileNotFoundError")
-    
+
+def test_scanner_can_be_created():
+    config = Configuration("config/case.yaml")
+
+    scanner = Scanner(config)
+
+    assert scanner is not None
+
+
+def test_scanner_receives_configuration():
+    config = Configuration("config/case.yaml")
+
+    scanner = Scanner(config)
+
+    assert scanner.configuration.case_name == "Sample Legal Case"    

@@ -7,6 +7,7 @@ Coordinates execution of the evidence processing pipeline.
 from pathlib import Path
 
 from app.configuration import Configuration
+from app.scanner import Scanner
 
 
 class Workflow:
@@ -24,6 +25,12 @@ class Workflow:
 
         print("Loading configuration...")
         print(f"Case: {self.configuration.case_name}")
-        print("Configuration loaded successfully.")
+        print("✓ Configuration loaded")
 
-        return True
+        scanner = Scanner(self.configuration)
+
+        records = scanner.scan()
+
+        print(f"✓ {len(records)} evidence files discovered")
+
+        return records

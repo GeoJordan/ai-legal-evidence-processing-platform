@@ -36,6 +36,12 @@
 
 ## Completed Milestones
 
+| EP     | Module           | Status     |
+| ------ | ---------------- | ---------- |
+| EP-203 | Evidence Scanner | ✅ Complete |
+
+---
+
 ### EP-201 — Configuration Engine
 
 **Completed:** August 2026
