@@ -1,18 +1,29 @@
-# Legal Evidence Processing Platform Documentation
+
+# AI Legal Evidence Processing Platform
+
+### Intelligent Evidence Ingestion, Classification, Timeline Generation & Exhibit Preparation for Litigation
+
+---
 
 ## Architecture
 
 - EP-001 – Evidence Processing Pipeline
+
+---
 
 ## Project Management
 
 - Milestone Tracker
 - Development Log
 
+---
+
 ## Design Specifications
 
 - High-Level Design
 - Software Requirements Specification
+
+---
 
 ## API Documentation
 
