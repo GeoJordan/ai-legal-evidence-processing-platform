@@ -1,0 +1,51 @@
+# -------------------------------------------------------
+# Legal Evidence Processing Platform
+# Case Configuration
+# -------------------------------------------------------
+
+case:
+
+  name: "Sample Legal Case"
+
+  repository: "C:/Users/Kwash/projects/legal-case-management"
+
+  case_root: "C:/Users/Kwash/projects/legal-case-management/case"
+
+folders:
+
+  evidence: "04_evidence"
+
+  exhibits: "05_exhibits"
+
+  timeline: "07_timeline"
+
+  mediation: "08_mediation"
+
+  trial: "09_trial"
+
+processing:
+
+  recursive_scan: true
+
+  supported_extensions:
+
+    - ".pdf"
+    - ".jpg"
+    - ".jpeg"
+    - ".png"
+    - ".tif"
+    - ".tiff"
+    - ".docx"
+    - ".xlsx"
+    - ".txt"
+    - ".csv"
+    - ".mp4"
+    - ".mov"
+
+output:
+
+  processing_log: true
+
+  evidence_register: true
+
+  duplicate_report: true
