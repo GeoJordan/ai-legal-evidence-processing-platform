@@ -148,3 +148,53 @@ def test_mbox_ingestor_extracts_messages(tmp_path):
     assert len(messages) == 1
     assert isinstance(messages[0], EmailMessage)
     assert messages[0].body == "This is the email body."
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+
+from app.models.attachment import Attachment
+
+
+def test_mbox_ingestor_extracts_attachments(tmp_path):
+
+    mailbox_path = tmp_path / "sample.mbox"
+
+    mbox = mailbox.mbox(mailbox_path)
+
+    # Create a multipart email
+    message = MIMEMultipart()
+
+    message["From"] = "alice@example.com"
+    message["To"] = "bob@example.com"
+    message["Subject"] = "Contract"
+
+    # Body
+    message.attach(MIMEText("See attached contract.", "plain"))
+
+    # Attachment
+    attachment = MIMEApplication(b"PDFDATA")
+
+    attachment.add_header(
+        "Content-Disposition",
+        "attachment",
+        filename="contract.pdf"
+    )
+
+    message.attach(attachment)
+
+    # Convert into an mbox message
+    mbox_message = mailbox.mboxMessage(message)
+
+    mbox.add(mbox_message)
+    mbox.flush()
+
+    ingestor = MboxIngestor()
+
+    attachments = ingestor.extract_attachments(mailbox_path)
+
+    assert len(attachments) == 1
+    assert isinstance(attachments[0], Attachment)
+    assert attachments[0].filename == "contract.pdf"
+    assert attachments[0].content_type == "application/octet-stream"
+    assert attachments[0].data == b"PDFDATA"

@@ -3,14 +3,13 @@ EP-206D
 
 MBOX Ingestor
 """
-
 from pathlib import Path
 import mailbox
 
 from app.ingestors.base import BaseIngestor
+from app.models.attachment import Attachment
 from app.models.email_header import EmailHeader
 from app.models.email_message import EmailMessage
-
 
 class MboxIngestor(BaseIngestor):
 
@@ -134,3 +133,39 @@ class MboxIngestor(BaseIngestor):
             )
 
         return messages
+
+    def extract_attachments(self, path):
+        """
+        Extract all email attachments from an MBOX mailbox.
+
+        Returns:
+            list[Attachment]
+        """
+        mbox = self.open(path)
+
+        attachments = []
+
+        for message in mbox:
+
+            if not message.is_multipart():
+                continue
+
+            for part in message.walk():
+
+                filename = part.get_filename()
+
+                if not filename:
+                    continue
+
+                payload = part.get_payload(decode=True) or b""
+
+                attachments.append(
+                    Attachment(
+                        filename=filename,
+                        content_type=part.get_content_type(),
+                        size=len(payload),
+                        data=payload,
+                    )
+                )
+
+        return attachments
