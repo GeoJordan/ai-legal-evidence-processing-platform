@@ -85,3 +85,22 @@ def test_evidence_index_can_add_header():
     index.add_header(header)
 
     assert index.header_count() == 1
+
+from app.models.email_header import EmailHeader
+
+
+def test_evidence_index_can_add_header():
+
+    index = EvidenceIndex()
+
+    header = EmailHeader(
+        sender="alice@example.com",
+        recipient="bob@example.com",
+        subject="Meeting",
+        date="2026-08-06",
+        message_id="<123@example.com>",
+    )
+
+    index.add_header(header)
+
+    assert index.header_count() == 1
