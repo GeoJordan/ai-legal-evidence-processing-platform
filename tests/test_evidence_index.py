@@ -31,3 +31,38 @@ def test_evidence_index_can_add_message():
     index.add_message(message)
 
     assert index.message_count() == 1
+
+from app.models.attachment import Attachment
+
+
+def test_evidence_index_can_add_attachment():
+
+    index = EvidenceIndex()
+
+    attachment = Attachment(
+        filename="evidence.pdf",
+        content_type="application/pdf",
+        data=b"PDF DATA"
+    )
+
+    index.add_attachment(attachment)
+
+    assert index.attachment_count() == 1
+
+from app.models.attachment import Attachment
+
+
+def test_evidence_index_can_add_attachment():
+
+    index = EvidenceIndex()
+
+    attachment = Attachment(
+        filename="evidence.pdf",
+        content_type="application/pdf",
+        size=8,
+        data=b"PDF DATA",
+    )
+
+    index.add_attachment(attachment)
+
+    assert index.attachment_count() == 1
