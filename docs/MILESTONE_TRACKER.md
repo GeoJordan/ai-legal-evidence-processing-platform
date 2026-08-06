@@ -39,6 +39,7 @@
 | EP     | Module           | Status     |
 | ------ | ---------------- | ---------- |
 | EP-203 | Evidence Scanner | ✅ Complete |
+| EP-205 | Processing Framework | ✅ Complete |
 
 ---
 
