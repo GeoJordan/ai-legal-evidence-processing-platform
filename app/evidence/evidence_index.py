@@ -28,6 +28,23 @@ class EvidenceIndex:
     def attachment_count(self):
         return len(self._attachments)
 
+    @property
+    def messages(self):
+        """Read-only access to indexed messages."""
+        return self._messages
+
+
+    @property
+    def headers(self):
+        """Read-only access to indexed headers."""
+        return self._headers
+
+
+    @property
+    def attachments(self):
+        """Read-only access to indexed attachments."""
+        return self._attachments
+
     # -----------------------
     # Headers
     # -----------------------
