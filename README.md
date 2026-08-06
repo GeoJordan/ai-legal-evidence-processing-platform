@@ -205,6 +205,33 @@ requirements.txt
 
 ---
 
+## Sprint 5 Highlights
+
+Sprint 5 introduced the complete evidence ingestion framework.
+
+### Implemented
+
+- Scanner
+- File discovery
+- SHA256 hashing
+- Processing pipeline
+- File ingestors
+- Gmail Takeout (.mbox) ingestion
+- Email header extraction
+- Email body extraction
+- Attachment extraction
+- EvidenceContext redesign
+- End-to-end ingestion workflow
+
+### Quality
+
+- 34 automated tests
+- Test-driven development (TDD)
+- Modular architecture
+- Clean separation of concerns
+
+---
+
 ## 🔮 Coming Soon
 
 The next development milestones include:
