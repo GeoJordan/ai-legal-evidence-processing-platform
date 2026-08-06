@@ -104,3 +104,45 @@ def test_evidence_index_can_add_header():
     index.add_header(header)
 
     assert index.header_count() == 1
+
+from app.configuration import Configuration
+from app.context import EvidenceContext
+
+
+def test_evidence_index_can_load_context():
+
+    config = Configuration("config/case.yaml")
+
+    context = EvidenceContext(config)
+
+    header = EmailHeader(
+        sender="alice@example.com",
+        recipient="bob@example.com",
+        subject="Meeting",
+        date="2026-08-06",
+        message_id="<123@example.com>",
+    )
+
+    message = EmailMessage(
+        header=header,
+        body="Hello",
+    )
+
+    attachment = Attachment(
+        filename="evidence.pdf",
+        content_type="application/pdf",
+        size=8,
+        data=b"PDF DATA",
+    )
+
+    context.headers.append(header)
+    context.messages.append(message)
+    context.attachments.append(attachment)
+
+    index = EvidenceIndex()
+
+    index.load(context)
+
+    assert index.header_count() == 1
+    assert index.message_count() == 1
+    assert index.attachment_count() == 1

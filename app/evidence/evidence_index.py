@@ -37,3 +37,22 @@ class EvidenceIndex:
 
     def header_count(self):
         return len(self._headers)
+
+    def clear(self):
+
+        self._messages.clear()
+        self._attachments.clear()
+        self._headers.clear()
+
+    def load(self, context):
+
+        self.clear()
+
+        for header in context.headers:
+            self.add_header(header)
+
+        for message in context.messages:
+            self.add_message(message)
+
+        for attachment in context.attachments:
+            self.add_attachment(attachment)
