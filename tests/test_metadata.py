@@ -11,4 +11,7 @@ def test_metadata_extractor_can_be_created():
     extractor = MetadataExtractor()
 
     assert extractor is not None
-    assert context.file_records == []
+    assert context.message_count == 0
+    assert context.headers == []
+    assert context.messages == []
+    assert context.attachments == []

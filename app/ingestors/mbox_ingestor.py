@@ -40,6 +40,20 @@ class MboxIngestor(BaseIngestor):
         return mailbox.mbox(path)
 
     def ingest(self, path, context):
+        """
+        Populate an EvidenceContext from an MBOX mailbox.
+        """
+
+        context.source_path = str(path)
+
+        context.message_count = self.count_messages(path)
+
+        context.headers = self.extract_headers(path)
+
+        context.messages = self.extract_messages(path)
+
+        context.attachments = self.extract_attachments(path)
+
         return context
 
     def count_messages(self, path):
