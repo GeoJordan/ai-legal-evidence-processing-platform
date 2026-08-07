@@ -25,7 +25,11 @@ class TimelineGenerator:
                 message_id=header.message_id,
             )
 
+            # Add the event to the internal list
             self._events.append(event)
 
-        return self._events
-    
+        # Sort after ALL events have been added
+        self._events.sort(key=lambda event: event.date)
+
+        # Return a copy of the list
+        return list(self._events)
