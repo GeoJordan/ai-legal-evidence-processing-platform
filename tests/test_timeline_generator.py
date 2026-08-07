@@ -186,3 +186,70 @@ def test_timeline_generator_filters_by_keyword():
 
     assert len(filtered) == 1
     assert filtered[0].subject == "Passport Request"
+
+def test_timeline_generator_statistics():
+
+    index = EvidenceIndex()
+
+    header1 = EmailHeader(
+        sender="alice@example.com",
+        recipient="bob@example.com",
+        subject="Meeting",
+        date="2026-08-01",
+        message_id="<1@example.com>",
+    )
+
+    header2 = EmailHeader(
+        sender="charlie@example.com",
+        recipient="bob@example.com",
+        subject="Invoice",
+        date="2026-08-02",
+        message_id="<2@example.com>",
+    )
+
+    index.add_message(
+        EmailMessage(header=header1, body="Hello")
+    )
+
+    index.add_message(
+        EmailMessage(header=header2, body="Hi")
+    )
+
+    generator = TimelineGenerator()
+
+    events = generator.build(index)
+
+    stats = generator.statistics(events)
+
+    assert stats["total_events"] == 2
+    assert stats["unique_senders"] == 2
+    assert stats["unique_recipients"] == 1
+
+def test_timeline_generator_generates_report():
+
+    index = EvidenceIndex()
+
+    header = EmailHeader(
+        sender="alice@example.com",
+        recipient="bob@example.com",
+        subject="Passport Request",
+        date="2026-08-01",
+        message_id="<1@example.com>",
+    )
+
+    index.add_message(
+        EmailMessage(
+            header=header,
+            body="Please send the passport."
+        )
+    )
+
+    generator = TimelineGenerator()
+
+    events = generator.build(index)
+
+    report = generator.report(events)
+
+    assert "Evidence Timeline Report" in report
+    assert "Total Events" in report
+    assert "Passport Request" in report

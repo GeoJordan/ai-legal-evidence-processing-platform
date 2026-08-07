@@ -1,3 +1,4 @@
+from app.evidence.evidence_index import EvidenceIndex
 from app.models.timeline_event import TimelineEvent
 
 
@@ -6,10 +7,14 @@ class TimelineGenerator:
     Generates chronological legal timelines from indexed evidence.
     """
 
+    REPORT_WIDTH = 60
+    SECTION_DIVIDER = "=" * REPORT_WIDTH
+    SUBSECTION_DIVIDER = "-" * 20
+
     def __init__(self):
         self._events = []
 
-    def build(self, evidence_index):
+    def build(self, evidence_index: EvidenceIndex) -> list[TimelineEvent]:
 
         self._events = []
 
@@ -35,7 +40,7 @@ class TimelineGenerator:
         # Return a copy of the list
         return list(self._events)
 
-    def export(self, events):
+    def export(self, events: list[TimelineEvent]) -> str:
         """
         Export timeline events as a human-readable text report.
         """
@@ -48,7 +53,7 @@ class TimelineGenerator:
             lines.append(f"From: {event.sender}")
             lines.append(f"To: {event.recipient}")
             lines.append(f"Subject: {event.subject}")
-            lines.append("-" * 50)
+            lines.append(self.SUBSECTION_DIVIDER)
             lines.append("")
 
         return "\n".join(lines)
@@ -79,3 +84,56 @@ class TimelineGenerator:
                 or keyword in getattr(event, "body", "").lower()
             )
         ]
+
+    def statistics(self, events):
+        """
+        Return summary statistics for a collection of timeline events.
+        """
+
+        senders = {event.sender for event in events}
+        recipients = {event.recipient for event in events}
+
+        return {
+            "total_events": len(events),
+            "unique_senders": len(senders),
+            "unique_recipients": len(recipients),
+            "earliest_date": min((event.date for event in events), default=None),
+            "latest_date": max((event.date for event in events), default=None),
+        }
+
+    def report(self, events):
+        """
+        Generate a complete evidence timeline report.
+        """
+
+        stats = self.statistics(events)
+        timeline = self.export(events)
+
+        lines = [
+            self.SECTION_DIVIDER,
+            "Evidence Timeline Report",
+            self.SECTION_DIVIDER,
+            "",
+            "Summary",
+            self.SUBSECTION_DIVIDER,
+            f"Total Events      : {stats['total_events']}",
+            f"Unique Senders    : {stats['unique_senders']}",
+            f"Unique Recipients : {stats['unique_recipients']}",
+        ]
+
+        if stats["earliest_date"]:
+            lines.append(f"Earliest Date     : {stats['earliest_date']}")
+
+        if stats["latest_date"]:
+            lines.append(f"Latest Date       : {stats['latest_date']}")
+
+        lines.extend([
+            "",
+            self.SECTION_DIVIDER,
+            "Timeline",
+            self.SECTION_DIVIDER,
+            "",
+            timeline,
+        ])
+
+        return "\n".join(lines)
