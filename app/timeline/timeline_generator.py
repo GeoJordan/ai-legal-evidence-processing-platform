@@ -33,3 +33,21 @@ class TimelineGenerator:
 
         # Return a copy of the list
         return list(self._events)
+
+    def export(self, events):
+        """
+        Export timeline events as a human-readable text report.
+        """
+
+        lines = []
+
+        for event in events:
+
+            lines.append(f"Date: {event.date}")
+            lines.append(f"From: {event.sender}")
+            lines.append(f"To: {event.recipient}")
+            lines.append(f"Subject: {event.subject}")
+            lines.append("-" * 50)
+            lines.append("")
+
+        return "\n".join(lines)

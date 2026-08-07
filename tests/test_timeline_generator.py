@@ -77,3 +77,32 @@ def test_timeline_generator_sorts_events():
     assert events[0].date == "2026-08-01"
     assert events[1].date == "2026-08-03"
     assert events[2].date == "2026-08-05"
+
+def test_timeline_generator_exports_events():
+
+    index = EvidenceIndex()
+
+    header = EmailHeader(
+        sender="alice@example.com",
+        recipient="bob@example.com",
+        subject="Meeting",
+        date="2026-08-06",
+        message_id="<123@example.com>",
+    )
+
+    message = EmailMessage(
+        header=header,
+        body="Hello",
+    )
+
+    index.add_message(message)
+
+    generator = TimelineGenerator()
+
+    events = generator.build(index)
+
+    report = generator.export(events)
+
+    assert "Meeting" in report
+    assert "alice@example.com" in report
+    assert "2026-08-06" in report
