@@ -183,3 +183,53 @@ def test_builder_groups_reply_into_same_conversation():
 
     assert len(conversations) == 1
     assert conversations[0].message_count == 2
+
+def test_builder_groups_nested_replies_into_same_conversation():
+
+    index = EvidenceIndex()
+
+    first = EmailMessage(
+        header=EmailHeader(
+            sender="alice@example.com",
+            recipient="bob@example.com",
+            subject="Passport Request",
+            date="2026-08-01",
+            message_id="<1>",
+        ),
+        body="Message 1",
+    )
+
+    second = EmailMessage(
+        header=EmailHeader(
+            sender="bob@example.com",
+            recipient="alice@example.com",
+            subject="Re: Passport Request",
+            date="2026-08-02",
+            message_id="<2>",
+            in_reply_to="<1>",
+        ),
+        body="Message 2",
+    )
+
+    third = EmailMessage(
+        header=EmailHeader(
+            sender="alice@example.com",
+            recipient="bob@example.com",
+            subject="Re: Passport Request",
+            date="2026-08-03",
+            message_id="<3>",
+            in_reply_to="<2>",
+        ),
+        body="Message 3",
+    )
+
+    index.add_message(first)
+    index.add_message(second)
+    index.add_message(third)
+
+    builder = ConversationBuilder()
+
+    conversations = builder.build(index)
+
+    assert len(conversations) == 1
+    assert conversations[0].message_count == 3
