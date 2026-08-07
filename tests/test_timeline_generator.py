@@ -106,3 +106,43 @@ def test_timeline_generator_exports_events():
     assert "Meeting" in report
     assert "alice@example.com" in report
     assert "2026-08-06" in report
+
+def test_timeline_generator_filters_by_sender():
+
+    index = EvidenceIndex()
+
+    header1 = EmailHeader(
+        sender="alice@example.com",
+        recipient="bob@example.com",
+        subject="Meeting",
+        date="2026-08-01",
+        message_id="<1@example.com>",
+    )
+
+    header2 = EmailHeader(
+        sender="charlie@example.com",
+        recipient="bob@example.com",
+        subject="Invoice",
+        date="2026-08-02",
+        message_id="<2@example.com>",
+    )
+
+    index.add_message(
+        EmailMessage(header=header1, body="Hello")
+    )
+
+    index.add_message(
+        EmailMessage(header=header2, body="Hi")
+    )
+
+    generator = TimelineGenerator()
+
+    events = generator.build(index)
+
+    filtered = generator.filter_by_sender(
+        events,
+        "alice@example.com",
+    )
+
+    assert len(filtered) == 1
+    assert filtered[0].sender == "alice@example.com"

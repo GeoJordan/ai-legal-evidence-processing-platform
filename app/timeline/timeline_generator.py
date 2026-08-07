@@ -51,3 +51,14 @@ class TimelineGenerator:
             lines.append("")
 
         return "\n".join(lines)
+
+    def filter_by_sender(self, events, sender):
+        """
+        Return only timeline events sent by the specified sender.
+        """
+
+        return [
+            event
+            for event in events
+            if event.sender.lower() == sender.lower()
+        ]
