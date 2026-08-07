@@ -23,7 +23,8 @@ class TimelineGenerator:
                 recipient=header.recipient,
                 subject=header.subject,
                 message_id=header.message_id,
-            )
+                body=message.body,
+        )
 
             # Add the event to the internal list
             self._events.append(event)
@@ -61,4 +62,20 @@ class TimelineGenerator:
             event
             for event in events
             if event.sender.lower() == sender.lower()
+        ]
+
+    def filter_by_keyword(self, events, keyword):
+        """
+        Return timeline events whose subject or body contains the keyword.
+        """
+
+        keyword = keyword.lower()
+
+        return [
+            event
+            for event in events
+            if (
+                keyword in event.subject.lower()
+                or keyword in getattr(event, "body", "").lower()
+            )
         ]

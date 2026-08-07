@@ -16,3 +16,4 @@ class TimelineEvent:
     subject: str
 
     message_id: str
+    body: str = ""
