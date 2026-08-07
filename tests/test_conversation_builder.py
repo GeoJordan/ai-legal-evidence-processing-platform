@@ -146,3 +146,40 @@ def test_each_conversation_has_correct_subject():
     assert conversations[0].subject == "Passport Request"
     assert conversations[1].subject == "School Meeting"
     assert conversations[2].subject == "Medical Appointment"
+
+def test_builder_groups_reply_into_same_conversation():
+
+    index = EvidenceIndex()
+
+    first = EmailMessage(
+        header=EmailHeader(
+            sender="alice@example.com",
+            recipient="bob@example.com",
+            subject="Passport Request",
+            date="2026-08-01",
+            message_id="<1>",
+        ),
+        body="Please send passport.",
+    )
+
+    reply = EmailMessage(
+        header=EmailHeader(
+            sender="bob@example.com",
+            recipient="alice@example.com",
+            subject="Re: Passport Request",
+            date="2026-08-02",
+            message_id="<2>",
+            in_reply_to="<1>",
+        ),
+        body="Passport sent.",
+    )
+
+    index.add_message(first)
+    index.add_message(reply)
+
+    builder = ConversationBuilder()
+
+    conversations = builder.build(index)
+
+    assert len(conversations) == 1
+    assert conversations[0].message_count == 2

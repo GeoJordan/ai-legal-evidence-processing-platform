@@ -12,3 +12,7 @@ class EmailHeader:
     subject: str
     date: str
     message_id: str
+
+    in_reply_to: str | None = None
+
+    references: list[str] | None = None

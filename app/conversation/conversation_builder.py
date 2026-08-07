@@ -7,25 +7,45 @@ class ConversationBuilder:
     """
 
     def build(self, evidence_index):
-
         conversations = []
+
+        message_lookup = {}
 
         for message in evidence_index.messages:
 
-            conversation = Conversation()
+            reply_to = message.header.in_reply_to
 
-            conversation.subject = message.header.subject
+            if reply_to and reply_to in message_lookup:
 
-            conversation.messages.append(message)
+                conversation = message_lookup[reply_to]
 
-            conversation.participants.add(message.header.sender)
+                conversation.messages.append(message)
 
-            conversation.participants.add(message.header.recipient)
+                conversation.participants.add(message.header.sender)
 
-            conversation.start_date = message.header.date
+                conversation.participants.add(message.header.recipient)
 
-            conversation.end_date = message.header.date
+                conversation.end_date = message.header.date
 
-            conversations.append(conversation)
+                # Make the reply discoverable too
+                message_lookup[message.header.message_id] = conversation
+
+            else:
+
+                conversation = Conversation()
+
+                conversation.subject = message.header.subject.replace("Re: ", "")
+
+                conversation.messages.append(message)
+
+                conversation.participants.add(message.header.sender)
+                conversation.participants.add(message.header.recipient)
+
+                conversation.start_date = message.header.date
+                conversation.end_date = message.header.date
+
+                conversations.append(conversation)
+
+                message_lookup[message.header.message_id] = conversation
 
         return conversations
