@@ -5,4 +5,7 @@ class ConversationTimeline:
 
     def build(self, conversation):
 
-        return list(conversation.messages)
+        return sorted(
+            conversation.messages,
+            key=lambda message: message.header.date,
+        )
