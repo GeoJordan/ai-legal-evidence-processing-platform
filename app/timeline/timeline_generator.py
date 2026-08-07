@@ -8,8 +8,10 @@ class TimelineGenerator:
     """
 
     REPORT_WIDTH = 60
+
     SECTION_DIVIDER = "=" * REPORT_WIDTH
-    SUBSECTION_DIVIDER = "-" * 20
+    SUBSECTION_DIVIDER = "-" * REPORT_WIDTH
+
 
     def __init__(self):
         self._events = []

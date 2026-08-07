@@ -111,9 +111,31 @@ This platform automates these tasks while maintaining a modular architecture tha
 
 ---
 
-## Architecture
+# 📸 Project Showcase
+
+### GitHub Release (v0.6.0)
+
+![Release](docs/images/release-v0.6.0.png)
+
+---
+
+### Evidence Timeline Report
+
+![Timeline Report](docs/images/timeline-report.png)
+
+---
+
+### Automated Test Suite
+
+48 automated tests currently pass.
+
+![Tests](docs/images/tests-48-passed.png)
+
+---
 
 ## Architecture
+
+![Architecture](docs/images/architecture.png)
 
 ```text
                  Workflow
@@ -134,17 +156,18 @@ This platform automates these tasks while maintaining a modular architecture tha
 
 ## 🛣️ Development Roadmap
 
-| Sprint | Milestone | Status |
-|---------|-----------|:------:|
-| Sprint 1 | Repository Foundation | ✅ |
-| Sprint 2 | Configuration & Workflow | ✅ |
-| Sprint 3 | Scanner & Metadata Framework | ✅ |
-| Sprint 4 | Processing Framework | ✅ |
-| Sprint 4 | Evidence Ingestion Framework | 🚧 |
-| Sprint 5 | Gmail Takeout (MBOX) | ⏳ |
-| Sprint 6 | OCR & AI Classification | ⏳ |
-| Sprint 7 | Timeline & Exhibits | ⏳ |
-| Sprint 8 | Reporting Engine | ⏳ |
+| Sprint    | Milestone                 |  Status |
+| --------- | ------------------------- | :-----: |
+| Sprint 1  | Repository Foundation     |    ✅    |
+| Sprint 2  | Configuration & Workflow  |    ✅    |
+| Sprint 3  | Evidence Scanner          |    ✅    |
+| Sprint 4  | Processing Framework      |    ✅    |
+| Sprint 5  | Evidence Ingestion        |    ✅    |
+| Sprint 6  | Evidence Intelligence     |    ✅    |
+| Sprint 7  | Conversation Intelligence |    🔄   |
+| Sprint 8  | AI Classification         | Planned |
+| Sprint 9  | Relationship Analysis     | Planned |
+| Sprint 10 | Court Package Builder     | Planned |
 
 ---
 
@@ -162,21 +185,24 @@ This architecture allows new evidence sources and processing capabilities to be 
 
 ```text
 app/
+    evidence/
+    timeline/
+    models/
     configuration.py
     context.py
-    processing_stage.py
+    metadata.py
     pipeline.py
     scanner.py
-    metadata.py
 
 config/
 docs/
+examples/
 tests/
 
 README.md
 requirements.txt
-```
 
+```
 ---
 
 ## Technology Stack
@@ -195,9 +221,9 @@ requirements.txt
 
 | Item | Value |
 |------|-------|
-| **Current Version** | **v0.3.0** |
-| **Current Sprint** | Sprint 4 |
-| **Current Milestone** | EP-206 — Evidence Ingestion Framework |
+| **Current Version** | **v0.6.0** |
+| **Current Sprint** | Sprint 7 |
+| **Current Milestone** | Conversation Intelligence |
 | **Development Status** | 🟢 Active Development |
 | **Architecture** | Modular Processing Framework |
 | **Test Framework** | PyTest |
@@ -205,30 +231,43 @@ requirements.txt
 
 ---
 
-## Sprint 5 Highlights
+## 🚀 Sprint 6 Highlights
 
-Sprint 5 introduced the complete evidence ingestion framework.
+Sprint 6 introduced the **Evidence Intelligence** subsystem, enabling intelligent organization, analysis, and reporting of email evidence.
 
 ### Implemented
 
-- Scanner
-- File discovery
-- SHA256 hashing
-- Processing pipeline
-- File ingestors
-- Gmail Takeout (.mbox) ingestion
-- Email header extraction
-- Email body extraction
-- Attachment extraction
-- EvidenceContext redesign
-- End-to-end ingestion workflow
+- Evidence Index
+- Timeline Generator
+- Timeline Report
+- Sender Filtering
+- Keyword Filtering
+- Timeline Statistics
+- 48 automated tests
+- Architecture Decision Records (ADRs)
+- GitHub Release v0.6.0
 
 ### Quality
 
-- 34 automated tests
-- Test-driven development (TDD)
-- Modular architecture
-- Clean separation of concerns
+- 48 automated tests passing
+- Test-Driven Development (TDD)
+- Modular layered architecture
+- Architecture Decision Records (ADR)
+- Professional project documentation
+
+---
+
+## Example
+
+Generate a professional evidence timeline report.
+
+```bash
+python -m examples.generate_timeline_report
+```
+
+Example output:
+
+![Timeline Report](docs/images/timeline_report.png)
 
 ---
 
@@ -236,14 +275,14 @@ Sprint 5 introduced the complete evidence ingestion framework.
 
 The next development milestones include:
 
-- Gmail Takeout (MBOX) ingestion
-- Outlook PST ingestion
-- OCR document processing
+- Conversation Intelligence
+- Email conversation threading
+- Relationship graph generation
 - AI-powered evidence classification
-- Duplicate detection
-- Timeline generation
+- OCR document processing
+- Duplicate evidence detection
 - Exhibit package builder
-- Court-ready reporting
+- Court-ready case assembly
 
 ---
 
