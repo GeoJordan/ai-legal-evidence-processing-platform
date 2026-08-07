@@ -82,3 +82,67 @@ def test_builder_sets_participants():
     conversations = builder.build(index)
 
     assert len(conversations[0].participants) == 2
+
+def test_builder_creates_multiple_conversations():
+
+    index = EvidenceIndex()
+
+    subjects = [
+        "Passport Request",
+        "School Meeting",
+        "Medical Appointment",
+    ]
+
+    for i, subject in enumerate(subjects):
+
+        message = EmailMessage(
+            header=EmailHeader(
+                sender="alice@example.com",
+                recipient="bob@example.com",
+                subject=subject,
+                date=f"2026-08-0{i+1}",
+                message_id=f"<{i}@example.com>",
+            ),
+            body="Example",
+        )
+
+        index.add_message(message)
+
+    builder = ConversationBuilder()
+
+    conversations = builder.build(index)
+
+    assert len(conversations) == 3
+
+def test_each_conversation_has_correct_subject():
+
+    index = EvidenceIndex()
+
+    subjects = [
+        "Passport Request",
+        "School Meeting",
+        "Medical Appointment",
+    ]
+
+    for i, subject in enumerate(subjects):
+
+        message = EmailMessage(
+            header=EmailHeader(
+                sender="alice@example.com",
+                recipient="bob@example.com",
+                subject=subject,
+                date=f"2026-08-0{i+1}",
+                message_id=f"<{i}@example.com>",
+            ),
+            body="Example",
+        )
+
+        index.add_message(message)
+
+    builder = ConversationBuilder()
+
+    conversations = builder.build(index)
+
+    assert conversations[0].subject == "Passport Request"
+    assert conversations[1].subject == "School Meeting"
+    assert conversations[2].subject == "Medical Appointment"
