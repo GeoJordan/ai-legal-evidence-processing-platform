@@ -71,6 +71,23 @@ Current status:
 
 ---
 
+## 🚀 Quick Start
+
+Run the complete Conversation Intelligence demonstration:
+
+```bash
+python -m examples.generate_conversation_report
+```
+
+This demonstrates:
+
+- Evidence Index
+- Conversation Builder
+- Conversation Analytics
+- Conversation Report
+
+---
+
 ## Why This Platform?
 
 Traditional evidence management often requires:
