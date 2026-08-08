@@ -25,7 +25,38 @@ def test_report_contains_message_count():
 
     conversation = Conversation()
 
-    conversation.messages.extend(["A", "B", "C"])
+    conversation.messages.extend([
+        EmailMessage(
+            header=EmailHeader(
+                sender="a@example.com",
+                recipient="b@example.com",
+                subject="One",
+                date="2026-08-01",
+                message_id="<1>",
+            ),
+            body="One",
+        ),
+        EmailMessage(
+            header=EmailHeader(
+                sender="a@example.com",
+                recipient="b@example.com",
+                subject="Two",
+                date="2026-08-02",
+                message_id="<2>",
+            ),
+            body="Two",
+        ),
+        EmailMessage(
+            header=EmailHeader(
+                sender="a@example.com",
+                recipient="b@example.com",
+                subject="Three",
+                date="2026-08-03",
+                message_id="<3>",
+            ),
+            body="Three",
+        ),
+    ])
 
     report = ConversationReport()
 
@@ -46,3 +77,45 @@ def test_report_contains_participant_count():
     text = report.generate(conversation)
 
     assert "2" in text
+
+from app.models.email_header import EmailHeader
+from app.models.email_message import EmailMessage
+
+
+def test_report_lists_messages_in_order():
+
+    conversation = Conversation(subject="Passport Request")
+
+    conversation.messages.append(
+        EmailMessage(
+            header=EmailHeader(
+                sender="alice@example.com",
+                recipient="bob@example.com",
+                subject="Passport Request",
+                date="2026-08-01",
+                message_id="<1>",
+            ),
+            body="Please send passport.",
+        )
+    )
+
+    conversation.messages.append(
+        EmailMessage(
+            header=EmailHeader(
+                sender="bob@example.com",
+                recipient="alice@example.com",
+                subject="Re: Passport Request",
+                date="2026-08-02",
+                message_id="<2>",
+                in_reply_to="<1>",
+            ),
+            body="Passport sent.",
+        )
+    )
+
+    report = ConversationReport()
+
+    text = report.generate(conversation)
+
+    assert "Please send passport." in text
+    assert "Passport sent." in text

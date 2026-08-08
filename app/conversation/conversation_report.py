@@ -13,6 +13,7 @@ class ConversationReport:
 
         lines.append(self.SECTION_DIVIDER)
         lines.append("Conversation Report")
+
         lines.append(self.SECTION_DIVIDER)
         lines.append("")
 
@@ -20,7 +21,29 @@ class ConversationReport:
         lines.append("")
 
         lines.append(f"Participants: {len(conversation.participants)}")
-
         lines.append(f"Messages: {conversation.message_count}")
+        lines.append("")
+
+        timeline = sorted(
+            conversation.messages,
+            key=lambda message: message.header.date,
+        )
+
+        for message in timeline:
+
+            lines.append(message.header.date)
+            lines.append("")
+
+            lines.append(
+                f"{message.header.sender} → {message.header.recipient}"
+            )
+          
+            lines.append(message.header.subject)
+            lines.append("")
+
+            lines.append(message.body)
+            lines.append("")
+
+            lines.append("-" * self.REPORT_WIDTH)
 
         return "\n".join(lines)
