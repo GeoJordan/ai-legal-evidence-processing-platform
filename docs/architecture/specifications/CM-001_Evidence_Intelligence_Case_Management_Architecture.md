@@ -1,11 +1,12 @@
-# 📄 CM-001 — Evidence Intelligence & Case Management Architecture
+# 📄 CM-001_Evidence_Intelligence_Case_Management_Architecture
 
 ---
 
-Version: 1.0 (Draft)
+Version: 1.0
 Sprint: 8
-Status: Draft
+Status: Approved
 Owner: George Jordan
+Approved: 2026-08-08
 
 ---
 
@@ -226,10 +227,11 @@ app/
 ├── reporting/
 ├── timeline/
 ├── models/
-│      workspace.py
-│      case.py
-│      allegation.py
-│      exhibit.py
+│    workspace.py
+│    case.py
+│    allegation.py
+│    evidence.py
+│    exhibit.py
 │
 ├── case_management/
 │      evidence_selection.py
@@ -244,15 +246,21 @@ app/
 
 ## 9. Sprint 8 Roadmap
 
-| Milestone | Description                   |
-| --------- | ----------------------------- |
-| CM-801    | Workspace & Case domain model |
-| CM-802    | Allegation Manager            |
-| CM-803    | Evidence Selection Engine     |
-| CM-804    | Evidence Gap Analysis         |
-| CM-805    | Discovery Package Builder     |
-| CM-806    | Case Dashboard                |
-| CM-807    | End-to-End Case Demonstration |
+| Milestone | Description                        |
+| --------- | ---------------------------------- |
+| CM-801    | Workspace Domain Model             |
+| CM-802    | Case Domain Model                  |
+| CM-803    | Allegation Domain Model            |
+| CM-804    | Evidence Domain Model              |
+| CM-805    | Workspace → Case Relationship      |
+| CM-806    | Case → Allegation Relationship     |
+| CM-807    | Case → Evidence Relationship       |
+| CM-808    | Allegation → Evidence Relationship |
+| CM-809    | Evidence Selection Engine          |
+| CM-810    | Evidence Gap Analysis              |
+| CM-811    | Discovery Package Builder          |
+| CM-812    | Case Dashboard                     |
+| CM-813    | End-to-End Demonstration           |
 
 ---
 
