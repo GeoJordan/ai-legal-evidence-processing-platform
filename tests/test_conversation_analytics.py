@@ -79,3 +79,74 @@ def test_participant_statistics():
 
     assert stats["bob@example.com"]["sent"] == 1
     assert stats["bob@example.com"]["received"] == 1
+
+from datetime import date
+
+def test_response_times():
+
+    conversation = Conversation()
+
+    conversation.messages.append(
+        EmailMessage(
+            header=EmailHeader(
+                sender="alice@example.com",
+                recipient="bob@example.com",
+                subject="One",
+                date=date(2026, 8, 1),
+                message_id="<1>",
+            ),
+            body="Hello",
+        )
+    )
+
+    conversation.messages.append(
+        EmailMessage(
+            header=EmailHeader(
+                sender="bob@example.com",
+                recipient="alice@example.com",
+                subject="Two",
+                date=date(2026, 8, 3),
+                message_id="<2>",
+            ),
+            body="Reply",
+        )
+    )
+
+    analytics = ConversationAnalytics()
+
+    response_times = analytics.response_times(conversation)
+
+    assert response_times == [2]
+
+from datetime import date
+
+def test_summary_contains_all_sections():
+
+    conversation = Conversation(
+        start_date=date(2026, 8, 1),
+        end_date=date(2026, 8, 3),
+    )
+
+    conversation.messages.append(
+        EmailMessage(
+            header=EmailHeader(
+                sender="alice@example.com",
+                recipient="bob@example.com",
+                subject="One",
+                date="2026-08-01",
+                message_id="<1>",
+            ),
+            body="Hello",
+        )
+    )
+
+    conversation.participants.add("alice@example.com")
+    conversation.participants.add("bob@example.com")
+
+    analytics = ConversationAnalytics()
+
+    summary = analytics.summary(conversation)
+
+    assert "statistics" in summary
+    assert "participants" in summary
+    assert "response_times" in summary
