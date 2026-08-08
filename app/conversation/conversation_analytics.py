@@ -22,3 +22,27 @@ class ConversationAnalytics:
             "end_date": conversation.end_date,
             "duration_days": duration,
         }
+
+    def participants(self, conversation):
+
+        stats = {}
+
+        for message in conversation.messages:
+
+            sender = message.header.sender
+            recipient = message.header.recipient
+
+            stats.setdefault(
+                sender,
+                {"sent": 0, "received": 0},
+            )
+
+            stats.setdefault(
+                recipient,
+                {"sent": 0, "received": 0},
+            )
+
+            stats[sender]["sent"] += 1
+            stats[recipient]["received"] += 1
+
+        return stats
