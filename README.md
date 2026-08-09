@@ -128,6 +128,27 @@ This platform automates these tasks while maintaining a modular architecture tha
 
 ---
 
+## 🎬 Platform Demonstration
+
+The AI Legal Evidence Processing Platform includes an integrated
+demonstration that showcases the complete investigation workflow.
+
+![Platform Demonstration](docs/images/platform-demo-v0.8.0.png)
+
+Stages
+
+1. Workspace
+2. Case
+3. Allegations
+4. Evidence
+5. Evidence Selection
+6. Evidence Gap Analysis
+7. Discovery Package
+8. Case Dashboard
+9. Platform Status
+
+---
+
 # 📸 Project Showcase
 
 ### GitHub Release (v0.6.0)
