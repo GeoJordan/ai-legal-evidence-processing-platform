@@ -2,8 +2,16 @@
 Event Source domain model.
 """
 
+"""
+Event Source domain model.
+
+Represents a piece of evidence supporting a timeline event.
+"""
+
 
 class EventSource:
-    """Represents the evidence supporting a timeline event."""
+    """Represents supporting evidence."""
 
-    pass
+    def __init__(self, evidence_id: str):
+        self.evidence_id = evidence_id
+
