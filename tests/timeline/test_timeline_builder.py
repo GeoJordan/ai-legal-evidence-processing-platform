@@ -66,3 +66,45 @@ def test_builder_preserves_event_sources():
 
     assert len(built_event.sources) == 1
     assert built_event.sources[0] == source
+
+def test_builder_preserves_order_and_sources():
+    builder = TimelineBuilder()
+
+    # Earlier event
+    earlier = TimelineEvent(
+        date=date(2026, 8, 1),
+        title="Passport Email"
+    )
+    earlier.add_source(
+        EventSource(
+            evidence_id="EV-001",
+            source_type="Email",
+            reference="Inbox/Passport.msg"
+        )
+    )
+
+    # Later event
+    later = TimelineEvent(
+        date=date(2026, 8, 10),
+        title="Court Filing"
+    )
+    later.add_source(
+        EventSource(
+            evidence_id="EV-002",
+            source_type="Court Filing",
+            reference="Petition.pdf"
+        )
+    )
+
+    # Deliberately build out of order
+    timeline = builder.build([later, earlier])
+
+    events = timeline.events()
+
+    # Chronological order
+    assert events[0].title == "Passport Email"
+    assert events[1].title == "Court Filing"
+
+    # Evidence preserved
+    assert events[0].sources[0].evidence_id == "EV-001"
+    assert events[1].sources[0].evidence_id == "EV-002"
