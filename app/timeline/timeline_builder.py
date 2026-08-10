@@ -1,9 +1,25 @@
 """
-Timeline Builder service.
+Timeline Builder application service.
 """
 
 
-class TimelineBuilder:
-    """Builds a Timeline from an existing Case."""
+from app.timeline.timeline import Timeline
 
-    pass
+
+from app.timeline.timeline import Timeline
+
+
+class TimelineBuilder:
+    """Constructs Timeline objects."""
+
+    def build(self, events):
+        """
+        Builds a Timeline from a collection of events.
+        """
+        timeline = Timeline()
+
+        for event in events:
+            timeline.add_event(event)
+
+        return timeline
+
