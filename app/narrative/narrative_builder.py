@@ -5,18 +5,18 @@ class NarrativeBuilder:
     """Builds a Narrative from a Timeline."""
 
     def build(self, timeline):
-        return Narrative()
-
-    def build(self, timeline):
         narrative = Narrative()
 
         for event in timeline.events():
-            # Temporary implementation
-                section = NarrativeSection(
-                      heading=event.title,
-                      content=event.description
-                )
 
-                narrative.add_section(section)
+            section = NarrativeSection(
+                heading=event.title,
+                content=event.description
+            )
+
+            for source in event.sources:
+                section.add_source(source)
+
+            narrative.add_section(section)
 
         return narrative

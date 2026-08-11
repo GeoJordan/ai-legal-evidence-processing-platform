@@ -137,3 +137,32 @@ def test_builder_preserves_timeline_order():
 
     assert sections[0].heading == "Earlier Event"
     assert sections[1].heading == "Later Event"
+
+from app.timeline.event_source import EventSource
+
+
+def test_builder_copies_event_sources():
+    timeline = Timeline()
+
+    event = TimelineEvent(
+        date=date(2026, 8, 1),
+        title="Passport Request",
+        description="Petitioner requested the child's passport."
+    )
+
+    source = EventSource(
+        evidence_id="EV-001",
+        source_type="Email",
+        reference="Inbox/Passport.msg"
+    )
+
+    event.add_source(source)
+
+    timeline.add_event(event)
+
+    narrative = NarrativeBuilder().build(timeline)
+
+    section = narrative.sections()[0]
+
+    assert len(section.sources) == 1
+    assert section.sources[0] == source
