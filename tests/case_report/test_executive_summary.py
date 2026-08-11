@@ -1,5 +1,5 @@
 from app.case_report.executive_summary import ExecutiveSummary
-
+from app.case_report.evidence_statistics import EvidenceStatistics
 
 def test_executive_summary_starts_empty():
     summary = ExecutiveSummary()
@@ -60,3 +60,39 @@ def test_executive_summary_renders_statistics():
         "Evidence Items: 12\n"
         "Timeline Events: 8"
     )
+
+def test_executive_summary_stores_statistics_object():
+    stats = EvidenceStatistics(
+        {
+            "Evidence Items": 12
+        }
+    )
+
+    summary = ExecutiveSummary(
+        title="Executive Summary",
+        overview="Overview",
+        statistics=stats,
+    )
+
+    assert summary.statistics is stats
+
+
+def test_executive_summary_renders_statistics_object():
+
+    stats = EvidenceStatistics(
+        {
+            "Evidence Items": 12,
+            "Timeline Events": 8,
+        }
+    )
+
+    summary = ExecutiveSummary(
+        title="Executive Summary",
+        overview="Overview",
+        statistics=stats,
+    )
+
+    text = summary.to_text()
+
+    assert "Evidence Items: 12" in text
+    assert "Timeline Events: 8" in text
