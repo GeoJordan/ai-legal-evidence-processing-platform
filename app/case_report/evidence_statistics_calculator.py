@@ -1,4 +1,5 @@
 from app.case_report.evidence_statistics import EvidenceStatistics
+from app.evidence.evidence_type import EvidenceType
 
 
 class EvidenceStatisticsCalculator:
@@ -14,15 +15,15 @@ class EvidenceStatisticsCalculator:
 
         for item in evidence:
 
-            evidence_type = item.get("type")
+            evidence_type = item.evidence_type
 
-            if evidence_type == "email":
+            if evidence_type == EvidenceType.EMAIL:
                 statistics["Emails"] += 1
 
-            elif evidence_type == "pdf":
+            elif evidence_type == EvidenceType.PDF:
                 statistics["PDF Documents"] += 1
 
-            elif evidence_type == "image":
+            elif evidence_type == EvidenceType.IMAGE:
                 statistics["Images"] += 1
 
         return EvidenceStatistics(statistics)

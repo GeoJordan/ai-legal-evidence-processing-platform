@@ -63,3 +63,24 @@ def test_builder_adds_multiple_sections():
         summary,
         narrative,
     ]
+
+from app.evidence.email_evidence import EmailEvidence
+
+
+def test_builder_populates_statistics():
+
+    builder = CaseReportBuilder()
+
+    summary = ExecutiveSummary(
+        title="Executive Summary",
+        overview="Overview",
+    )
+
+    report = builder.build(
+        summary,
+        evidence=[
+            EmailEvidence(),
+        ],
+    )
+
+    assert report.sections()[0].statistics is not None

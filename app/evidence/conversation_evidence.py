@@ -30,3 +30,9 @@ class ConversationEvidence(EvidenceItem):
     @property
     def title(self):
         return self._title
+
+    def add(self, message):
+        self.messages.append(message)
+
+    def message_count(self):
+        return len(self.messages)
