@@ -1,16 +1,14 @@
 from app.timeline.timeline_generator import TimelineGenerator
 
+from app.evidence.evidence_index import EvidenceIndex
+from app.models.email_header import EmailHeader
+from app.models.email_message import EmailMessage
 
 def test_timeline_generator_can_be_created():
 
     generator = TimelineGenerator()
 
     assert generator is not None
-
-from app.evidence.evidence_index import EvidenceIndex
-from app.models.email_header import EmailHeader
-from app.models.email_message import EmailMessage
-
 
 def test_timeline_generator_builds_events():
 
@@ -37,11 +35,6 @@ def test_timeline_generator_builds_events():
 
     assert len(events) == 1
     assert events[0].subject == "Meeting"
-
-from app.evidence.evidence_index import EvidenceIndex
-from app.models.email_header import EmailHeader
-from app.models.email_message import EmailMessage
-
 
 def test_timeline_generator_sorts_events():
 
