@@ -2,7 +2,7 @@
 
 ### Scan • Extract • Classify • Organize • Prepare Court-Ready Evidence
 
-An extensible Python platform for ingesting, processing, classifying, and preparing digital legal evidence.
+An AI-powered litigation support platform for collecting, organizing,processing, analyzing, and reporting digital legal evidence.
 
 Designed for litigation support, family law, civil litigation, internal investigations, eDiscovery, compliance, and digital evidence management.
 
