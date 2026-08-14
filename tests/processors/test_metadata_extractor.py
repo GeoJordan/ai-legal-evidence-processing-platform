@@ -159,3 +159,23 @@ def _parse_references(self, value: str) -> list[str]:
         return []
 
     return value.split()
+
+def test_extract_bcc():
+
+    message = EmailMessage()
+    message["Bcc"] = "legal@example.com, archive@example.com"
+
+    header = MetadataExtractor().extract(message)
+
+    assert header.bcc == [
+        "legal@example.com",
+        "archive@example.com",
+    ]
+
+def test_missing_bcc_returns_empty_list():
+
+    message = EmailMessage()
+
+    header = MetadataExtractor().extract(message)
+
+    assert header.bcc == []

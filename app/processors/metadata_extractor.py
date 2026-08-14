@@ -15,6 +15,7 @@ class MetadataExtractor:
             subject=message.get("Subject", ""),
             to=self._parse_addresses(message.get("To", "")),
             cc=self._parse_addresses(message.get("CC", "")),
+            bcc=self._parse_addresses(message.get("Bcc", "")),
             sent_at=self._parse_date(message.get("Date", "")),
             in_reply_to=message.get("In-Reply-To"),
             references=self._parse_references(
