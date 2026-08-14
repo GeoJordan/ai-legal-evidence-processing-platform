@@ -34,6 +34,22 @@
 
 ---
 
+# Milestones
+
+## M-001
+✅ Project Architecture Established
+
+## M-002
+✅ Workspace Management
+
+## M-003
+✅ MBOX Reader (EP-502.2)
+
+## M-004
+⬜ Email Metadata Extraction
+
+---
+
 ## Completed Milestones
 
 | EP     | Module           | Status     |
