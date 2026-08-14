@@ -69,3 +69,41 @@ def test_extract_empty_cc():
     header = MetadataExtractor().extract(message)
 
     assert header.cc == []
+
+from datetime import datetime
+
+
+def test_extract_sent_date():
+
+    message = EmailMessage()
+    message["Date"] = "Tue, 11 Aug 2026 09:42:15 -0400"
+
+    header = MetadataExtractor().extract(message)
+
+    assert isinstance(header.sent_at, datetime)
+
+def test_missing_date_returns_none():
+
+    message = EmailMessage()
+
+    header = MetadataExtractor().extract(message)
+
+    assert header.sent_at is None
+
+def test_timezone_is_preserved():
+
+    message = EmailMessage()
+    message["Date"] = "Tue, 11 Aug 2026 09:42:15 -0400"
+
+    header = MetadataExtractor().extract(message)
+
+    assert header.sent_at.utcoffset().total_seconds() == -4 * 3600
+
+def test_invalid_date_returns_none():
+
+    message = EmailMessage()
+    message["Date"] = "Not a real date"
+
+    header = MetadataExtractor().extract(message)
+
+    assert header.sent_at is None
