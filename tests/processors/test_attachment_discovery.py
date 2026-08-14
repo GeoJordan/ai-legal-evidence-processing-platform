@@ -201,3 +201,78 @@ def test_multiple_content_types():
     assert attachments[0].content_type == "application/pdf"
     assert attachments[1].content_type == "image/png"
 
+def test_attachment_size():
+
+    message = EmailMessage()
+    message.set_content("Body")
+
+    payload = b"ABCDE"
+
+    message.add_attachment(
+        payload,
+        maintype="application",
+        subtype="pdf",
+        filename="contract.pdf",
+    )
+
+    attachments = AttachmentDiscovery().discover(message)
+
+    assert attachments[0].size == len(payload)
+
+def test_zero_byte_attachment():
+
+    message = EmailMessage()
+    message.set_content("Body")
+
+    message.add_attachment(
+        b"",
+        maintype="application",
+        subtype="pdf",
+        filename="empty.pdf",
+    )
+
+    attachments = AttachmentDiscovery().discover(message)
+
+    assert attachments[0].size == 0
+
+def test_multiple_attachment_sizes():
+
+    message = EmailMessage()
+    message.set_content("Body")
+
+    message.add_attachment(
+        b"12345",
+        maintype="application",
+        subtype="pdf",
+        filename="a.pdf",
+    )
+
+    message.add_attachment(
+        b"123456789",
+        maintype="image",
+        subtype="png",
+        filename="b.png",
+    )
+
+    attachments = AttachmentDiscovery().discover(message)
+
+    assert attachments[0].size == 5
+    assert attachments[1].size == 9
+
+def test_large_attachment_size():
+
+    payload = b"x" * 100000
+
+    message = EmailMessage()
+    message.set_content("Body")
+
+    message.add_attachment(
+        payload,
+        maintype="application",
+        subtype="zip",
+        filename="archive.zip",
+    )
+
+    attachments = AttachmentDiscovery().discover(message)
+
+    assert attachments[0].size == 100000
