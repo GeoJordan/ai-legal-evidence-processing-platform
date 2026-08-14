@@ -107,3 +107,55 @@ def test_invalid_date_returns_none():
     header = MetadataExtractor().extract(message)
 
     assert header.sent_at is None
+
+def test_extract_in_reply_to():
+
+    message = EmailMessage()
+    message["In-Reply-To"] = "<parent@example.com>"
+
+    header = MetadataExtractor().extract(message)
+
+    assert header.in_reply_to == "<parent@example.com>"
+
+def test_missing_in_reply_to_returns_none():
+
+    message = EmailMessage()
+
+    header = MetadataExtractor().extract(message)
+
+    assert header.in_reply_to is None
+
+def test_extract_references():
+
+    message = EmailMessage()
+
+    message["References"] = (
+        "<001@example.com> "
+        "<002@example.com> "
+        "<003@example.com>"
+    )
+
+    header = MetadataExtractor().extract(message)
+
+    assert header.references == [
+        "<001@example.com>",
+        "<002@example.com>",
+        "<003@example.com>",
+    ]
+
+def test_missing_references_returns_empty_list():
+
+    message = EmailMessage()
+
+    header = MetadataExtractor().extract(message)
+
+    assert header.references == []
+
+def _parse_references(self, value: str) -> list[str]:
+    """
+    Convert the RFC-822 References header into a list of Message-IDs.
+    """
+    if not value:
+        return []
+
+    return value.split()
