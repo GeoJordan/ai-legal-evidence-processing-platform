@@ -16,6 +16,10 @@ class MetadataExtractor:
             to=self._parse_addresses(message.get("To", "")),
             cc=self._parse_addresses(message.get("CC", "")),
             sent_at=self._parse_date(message.get("Date", "")),
+            in_reply_to=message.get("In-Reply-To"),
+            references=self._parse_references(
+                message.get("References", "")
+            ),
         )
 
     def _parse_addresses(self, value: str) -> list[str]:
@@ -42,3 +46,13 @@ class MetadataExtractor:
             return parsedate_to_datetime(value)
         except (TypeError, ValueError):
             return None
+
+    def _parse_references(self, value: str) -> list[str]:
+        """
+        Convert an RFC-822 References header into a list of Message-IDs.
+        """
+
+        if not value:
+            return []
+
+        return value.split()
