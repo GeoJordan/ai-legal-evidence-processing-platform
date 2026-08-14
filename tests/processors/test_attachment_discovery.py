@@ -276,3 +276,39 @@ def test_large_attachment_size():
     attachments = AttachmentDiscovery().discover(message)
 
     assert attachments[0].size == 100000
+
+def test_attachment_binary_data():
+
+    payload = b"HELLO WORLD"
+
+    message = EmailMessage()
+    message.set_content("Body")
+
+    message.add_attachment(
+        payload,
+        maintype="application",
+        subtype="pdf",
+        filename="contract.pdf",
+    )
+
+    attachments = AttachmentDiscovery().discover(message)
+
+    assert attachments[0].data == payload
+
+def test_empty_binary_attachment():
+
+    message = EmailMessage()
+    message.set_content("Body")
+
+    message.add_attachment(
+        b"",
+        maintype="application",
+        subtype="pdf",
+        filename="empty.pdf",
+    )
+
+    attachments = AttachmentDiscovery().discover(message)
+
+    assert attachments[0].data == b""
+
+

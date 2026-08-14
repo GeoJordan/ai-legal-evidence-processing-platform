@@ -24,7 +24,7 @@ class AttachmentDiscovery:
                     filename=part.get_filename() or "",
                     content_type=part.get_content_type(),
                     size=len(payload),
-                    data=b"",
+                    data=payload,
                 )
             )
 
