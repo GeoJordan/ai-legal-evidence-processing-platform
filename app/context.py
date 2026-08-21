@@ -6,6 +6,7 @@ from app.models.email_header import EmailHeader
 from app.models.email_message import EmailMessage
 from app.models.attachment import Attachment
 from typing import Optional
+from app.models import FileRecord
 
 
 @dataclass
@@ -15,8 +16,10 @@ class EvidenceContext:
     """
 
     configuration: Configuration | None = None
-    
+
     source_path: str = ""
+
+    files: list[FileRecord] = field(default_factory=list)
 
     message_count: int = 0
 

@@ -2,3 +2,21 @@ extracted_text/
 processing_output/
 evidence_register.csv
 *.log
+# ---------------------------------------------------------
+# Real evidence / candidate review artifacts
+# ---------------------------------------------------------
+
+exports/
+
+# Email evidence sources
+*.mbox
+
+# Python cache / compiled files
+__pycache__/
+*.py[cod]
+
+# Real evidence / candidate review artifacts
+exports/
+
+# Email evidence sources
+*.mbox
